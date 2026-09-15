@@ -55,7 +55,7 @@ contract SogdiaRewardsTest {
         vm.warp(1000);
         vm.chainId(46630);
         t = new TestToken(1000);
-        r = new SogdiaRewards(t, address(this));
+        r = new SogdiaRewards(t, address(this), 100, 10000);
         t.approve(address(r), 1000);
         r.fund(100);
     }
@@ -167,9 +167,9 @@ contract SogdiaRewardsTest {
     }
 
     function testContractAndTokenDomainDiffer() public {
-        SogdiaRewards other = new SogdiaRewards(t, address(this));
+        SogdiaRewards other = new SogdiaRewards(t, address(this), 100, 10000);
         TestToken otherToken = new TestToken(1);
-        SogdiaRewards otherAsset = new SogdiaRewards(otherToken, address(this));
+        SogdiaRewards otherAsset = new SogdiaRewards(otherToken, address(this), 100, 10000);
         require(r.leaf(P, 0, A, 0, 20) != other.leaf(P, 0, A, 0, 20));
         require(r.leaf(P, 0, A, 0, 20) != otherAsset.leaf(P, 0, A, 0, 20));
     }
@@ -193,6 +193,57 @@ contract SogdiaRewardsTest {
         require(r.reserved() == 80 && r.available() == 0);
     }
 
+    // Owner-risk limits: one period at a time, exact length, budget cap.
+    function limited(uint16 bps) internal returns (SogdiaRewards d) {
+        d = new SogdiaRewards(t, address(this), 100, bps);
+        t.approve(address(d), 1000);
+        d.fund(500);
+    }
+
+    function testOnlyOnePeriodAtATimeAndNoOverlap() public {
+        SogdiaRewards d = limited(10000);
+        d.openPeriod(P, 1000, 1100, 10, 0, POLICY);
+        vm.warp(1050);
+        vm.expectRevert();
+        d.openPeriod(keccak256("second"), 1100, 1200, 10, 0, POLICY);
+        vm.warp(1100);
+        d.finalizePeriod(P, bytes32(0), 0, 0);
+        d.openPeriod(keccak256("second"), 1100, 1200, 10, 0, POLICY);
+        require(d.currentPeriod() == keccak256("second"));
+    }
+
+    function testPeriodLengthIsExact() public {
+        SogdiaRewards d = limited(10000);
+        vm.expectRevert();
+        d.openPeriod(P, 1000, 1099, 10, 0, POLICY);
+        vm.expectRevert();
+        d.openPeriod(P, 1000, 1101, 10, 0, POLICY);
+        d.openPeriod(P, 1000, 1100, 10, 0, POLICY);
+    }
+
+    function testBudgetCapIsShareOfUncommittedReserve() public {
+        SogdiaRewards d = limited(200); // 2% of 500 = 10
+        vm.expectRevert();
+        d.openPeriod(P, 1000, 1100, 6, 5, POLICY);
+        d.openPeriod(P, 1000, 1100, 6, 4, POLICY);
+        vm.warp(1100);
+        d.finalizePeriod(P, d.leaf(P, 0, A, 0, 6), 6, 4);
+        // 490 uncommitted: 2% is 9 (floor), the unpaid 10 cannot count toward it.
+        vm.expectRevert();
+        d.openPeriod(keccak256("next"), 1100, 1200, 10, 0, POLICY);
+        d.openPeriod(keccak256("next"), 1100, 1200, 9, 0, POLICY);
+    }
+
+
+    function testLimitsAreValidatedAtDeployment() public {
+        vm.expectRevert();
+        new SogdiaRewards(t, address(this), 0, 200);
+        vm.expectRevert();
+        new SogdiaRewards(t, address(this), 1, 0);
+        vm.expectRevert();
+        new SogdiaRewards(t, address(this), 1, 10001);
+    }
+
     function testTwoStepOwnershipAndRenunciationBlocked() public {
         r.transferOwnership(B);
         require(r.owner() == address(this));
@@ -209,7 +260,7 @@ contract SogdiaRewardsTest {
 
     function testTransferFailureAndTaxRollbackClaim() public {
         AdversarialToken bad = new AdversarialToken();
-        SogdiaRewards d = new SogdiaRewards(bad, address(this));
+        SogdiaRewards d = new SogdiaRewards(bad, address(this), 100, 10000);
         bad.approve(address(d), 100);
         d.fund(100);
         d.openPeriod(P, 1000, 1100, 40, 60, POLICY);
@@ -231,7 +282,7 @@ contract SogdiaRewardsTest {
 
     function testTaxedFundingRejected() public {
         AdversarialToken bad = new AdversarialToken();
-        SogdiaRewards d = new SogdiaRewards(bad, address(this));
+        SogdiaRewards d = new SogdiaRewards(bad, address(this), 100, 10000);
         bad.approve(address(d), 100);
         bad.configure(false, true, address(0), "");
         vm.expectRevert();
@@ -241,7 +292,7 @@ contract SogdiaRewardsTest {
 
     function testReentrantTokenCannotClaimTwice() public {
         AdversarialToken bad = new AdversarialToken();
-        SogdiaRewards d = new SogdiaRewards(bad, address(this));
+        SogdiaRewards d = new SogdiaRewards(bad, address(this), 100, 10000);
         bad.approve(address(d), 100);
         d.fund(100);
         d.openPeriod(P, 1000, 1100, 40, 60, POLICY);
@@ -257,7 +308,7 @@ contract SogdiaRewardsTest {
         uint256 funding = uint256(fundingSeed) + 1;
         uint256 payout = uint256(payoutSeed) % funding + 1;
         TestToken x = new TestToken(funding);
-        SogdiaRewards d = new SogdiaRewards(x, address(this));
+        SogdiaRewards d = new SogdiaRewards(x, address(this), 100, 10000);
         x.approve(address(d), funding);
         d.fund(funding);
         d.openPeriod(P, 1000, 1100, funding, 0, POLICY);

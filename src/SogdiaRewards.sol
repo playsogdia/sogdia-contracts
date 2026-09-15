@@ -13,12 +13,23 @@ import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProo
 /// proves membership, NOT that the publisher correctly summed/selected every leaf.
 /// Non-upgradeable, immutable token, no withdrawal. Plain, non-rebasing,
 /// non-taxed ERC20 only. Launch-token compatibility must be tested before deployment.
+///
+/// Owner-risk limits, fixed at deployment and readable by anyone:
+/// - one period at a time: a period opens only after the previous one is finalized and starts no
+///   earlier than its end;
+/// - every period lasts exactly `periodSeconds` (production: 7 days);
+/// - a period's budget is at most `maxBudgetBps` of the uncommitted reserve (production: 200 = 2%);
+/// These bound, but cannot remove, the trust in the publisher described above.
 contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     bytes32 public constant DOMAIN = keccak256("SogdiaRewards.v1");
     IERC20 public immutable token;
+    uint64 public immutable periodSeconds;
+    uint16 public immutable maxBudgetBps;
     uint256 public reserved;
+    /// The most recently opened period; zero before the first.
+    bytes32 public currentPeriod;
 
     struct Period {
         uint64 start;
@@ -53,9 +64,15 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
         bytes32 indexed period, uint256 indexed index, address indexed recipient, uint8 channel, uint256 amount
     );
 
-    constructor(IERC20 rewardToken, address initialOwner) Ownable(initialOwner) {
-        if (address(rewardToken).code.length == 0) revert InvalidInput();
+    constructor(IERC20 rewardToken, address initialOwner, uint64 periodLength, uint16 budgetBps)
+        Ownable(initialOwner)
+    {
+        if (address(rewardToken).code.length == 0 || periodLength == 0 || budgetBps == 0 || budgetBps > 10000) {
+            revert InvalidInput();
+        }
         token = rewardToken;
+        periodSeconds = periodLength;
+        maxBudgetBps = budgetBps;
     }
 
     function available() public view returns (uint256) {
@@ -84,11 +101,18 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
             revert InvalidInput();
         }
         if (periods[id].opened) revert InvalidPeriod();
+        if (end - start != periodSeconds) revert InvalidInput();
+        if (currentPeriod != bytes32(0)) {
+            Period storage previous = periods[currentPeriod];
+            if (!previous.finalized || start < previous.end) revert InvalidPeriod();
+        }
         uint256 budget = goldBudget + caravanBudget;
         if (budget == 0) revert InvalidInput();
         uint256 free = available();
         if (budget > free) revert InsufficientReserve();
+        if (budget > free * maxBudgetBps / 10000) revert InsufficientReserve();
         reserved += budget;
+        currentPeriod = id;
         periods[id] = Period(start, end, true, false, policyHash, bytes32(0), goldBudget, caravanBudget, 0, 0);
         emit PeriodOpened(id, start, end, goldBudget, caravanBudget, policyHash);
     }
