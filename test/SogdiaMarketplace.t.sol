@@ -116,17 +116,25 @@ contract SogdiaMarketplaceTest {
         vm.expectRevert();m.pause();
         vm.prank(safe);m.pause();require(m.paused());
     }
-    // External marketplaces: ERC-2981 royalty = marketplace commission to the reward reserve, fixed at binding.
-    function testRoyaltyMatchesMarketplaceFeeToReserveAndCannotChange() public {
-        (address receiver,uint256 amount)=c.royaltyInfo(60000,10000);
-        require(receiver==R&&amount==250);
-        (,uint256 small)=c.royaltyInfo(1,39800*10**18);
-        require(small==39800*10**18*250/10000);
-        require(c.supportsInterface(0x2a55205a)&&c.supportsInterface(0xd9b67a26));
-        SogdiaCosmetics unbound=new SogdiaCosmetics(address(this));
-        (address none,uint256 zero)=unbound.royaltyInfo(60000,10000);
+    // External marketplaces: ERC-2981 royalty is owner-set, capped, and independent of the marketplace fee.
+    function testRoyaltyIsOwnerSetCappedAndSeparateFromMarketFee() public {
+        (address none,uint256 zero)=c.royaltyInfo(60000,10000);
         require(none==address(0)&&zero==0);
-        vm.expectRevert();c.bindMarketplace(address(m));
+        require(c.supportsInterface(0x2a55205a)&&c.supportsInterface(0xd9b67a26));
+        address wallet=address(0x7A7);
+        vm.prank(A);vm.expectRevert();c.setRoyalty(wallet,500);
+        vm.expectRevert();c.setRoyalty(address(0),500);
+        vm.expectRevert();c.setRoyalty(wallet,1001);
+        c.setRoyalty(wallet,500);
+        (address receiver,uint256 amount)=c.royaltyInfo(60000,10000);
+        require(receiver==wallet&&amount==500);
+        (,uint256 large)=c.royaltyInfo(1,39800*10**18);
+        require(large==39800*10**18*500/10000);
+        c.setRoyalty(R,1000);
+        (receiver,amount)=c.royaltyInfo(60000,10000);
+        require(receiver==R&&amount==1000);
+        uint256 id=listing(1);vm.prank(B);m.buyListing(id,1,200);
+        require(t.balanceOf(A)==10095&&t.balanceOf(R)==105);
     }
     // ERC-7572 collection metadata: owner-only, non-empty.
     function testContractURIIsOwnerOnly() public {

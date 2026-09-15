@@ -6,29 +6,25 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 import {ERC2981} from "@openzeppelin/contracts/token/common/ERC2981.sol";
 
-/// The bound marketplace's immutable reserve and commission, read once at binding.
-interface ISogdiaMarketTerms {
-    function rewardReserve() external view returns (address);
-    function feeBps() external view returns (uint16);
-}
-
 /// Sogdia game items, sold only through the bound marketplace.
 /// Non-upgradeable; immutable per-product metadata/cap; lifetime issuance never resets.
 /// External marketplaces such as OpenSea:
-/// - ERC-2981 royalty equal to the bound marketplace's commission, paid to its reward reserve, set once at
-///   `bindMarketplace` and never changeable, so resales elsewhere can pay the same 2.5% to the pool.
-///   Whether a given external marketplace honours ERC-2981 is up to that marketplace.
+/// - ERC-2981 royalty for resales there, paid to an owner-set receiver at an owner-set rate of at most
+///   `MAX_ROYALTY_BPS`. It is separate from the bound marketplace's own commission and never affects
+///   sales through that marketplace. Whether an external marketplace honours ERC-2981 is up to it.
 /// - ERC-7572 `contractURI` for collection name, logo and description; owner-updatable. Each product's
 ///   own metadata URI stays immutable.
 contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
     struct Product { bool exists; uint256 cap; uint256 minted; string metadata; }
     mapping(uint256 => Product) private products;
+    uint96 public constant MAX_ROYALTY_BPS = 1000;
     address public marketplace;
     string private collectionURI;
     error InvalidInput();
     error Unavailable();
     event ProductCreated(uint256 indexed id, uint256 cap, string metadata);
     event MarketplaceBound(address indexed marketplace);
+    event RoyaltyUpdated(address indexed receiver, uint96 bps);
     /// ERC-7572.
     event ContractURIUpdated();
     constructor(address initialOwner) ERC1155("") Ownable(initialOwner) {}
@@ -42,9 +38,13 @@ contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
     function bindMarketplace(address market) external onlyOwner {
         if (marketplace != address(0) || market.code.length == 0) revert InvalidInput();
         marketplace = market;
-        ISogdiaMarketTerms terms = ISogdiaMarketTerms(market);
-        _setDefaultRoyalty(terms.rewardReserve(), terms.feeBps());
         emit MarketplaceBound(market);
+    }
+    /// Royalty on external marketplaces; no royalty is reported until this is first called.
+    function setRoyalty(address receiver, uint96 bps) external onlyOwner {
+        if (receiver == address(0) || bps > MAX_ROYALTY_BPS) revert InvalidInput();
+        _setDefaultRoyalty(receiver, bps);
+        emit RoyaltyUpdated(receiver, bps);
     }
     function contractURI() external view returns (string memory) { return collectionURI; }
     function setContractURI(string calldata newURI) external onlyOwner {
