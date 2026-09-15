@@ -1,0 +1,15 @@
+# Build output
+out/
+cache/
+broadcast/
+
+# Dependencies (installed with npm ci)
+node_modules/
+
+# Local secrets and environment
+.env
+.env.*
+*.keystore
+*keystore*.json
+
+.DS_Store
