@@ -31,6 +31,7 @@ contract SogdiaMarketplaceTest {
         t.transfer(A,10000); t.transfer(B,10000); vm.prank(A);t.approve(address(m),10000); vm.prank(B);t.approve(address(m),10000);
     }
     function buy(address who,uint256 n) private { vm.prank(who);m.buyPrimary(60000,n,n*100); }
+    function listing(uint256 n) private returns(uint256) { buy(A,n);vm.prank(A);c.setApprovalForAll(address(m),true);vm.prank(A);return m.list(60000,n,200,1500); }
     function testLimitedSupplyAndSoldOutRollback() public {
         buy(A,2);buy(B,1);uint256 before=t.balanceOf(B);vm.expectRevert();buy(B,1);
         require(c.totalSupply(60000)==3&&t.balanceOf(B)==before&&t.balanceOf(R)==300);
@@ -44,8 +45,27 @@ contract SogdiaMarketplaceTest {
         c.createProduct(60001,0,"ipfs://synthetic-fixture/standard.json");m.createOffer(60001,1,1000,0);
         vm.prank(A);m.buyPrimary(60001,10,10);require(c.totalSupply(60001)==10&&c.totalSupply(60000)==0);
     }
+    function testEscrowPartialSaleAndCancellationConserveSupply() public {
+        uint256 id=listing(2);require(c.balanceOf(A,60000)==0&&c.balanceOf(address(m),60000)==2);
+        vm.prank(B);m.buyListing(id,1,200);require(c.balanceOf(B,60000)==1&&t.balanceOf(A)==9995&&t.balanceOf(R)==205);
+        vm.prank(A);m.cancel(id);require(c.balanceOf(A,60000)==1&&c.balanceOf(address(m),60000)==0&&c.totalSupply(60000)==2);
+        vm.prank(B);vm.expectRevert();m.buyListing(id,1,200);
+    }
+    function testOnlySellerCanCancelAndCannotDoubleSell() public {
+        uint256 id=listing(1);vm.prank(B);vm.expectRevert();m.cancel(id);
+        vm.prank(B);m.buyListing(id,1,200);vm.prank(B);vm.expectRevert();m.buyListing(id,1,200);vm.prank(A);vm.expectRevert();m.cancel(id);
+    }
+    function testSelfTradeWrongPriceAndExpiredListingFail() public {
+        uint256 id=listing(1);vm.prank(A);vm.expectRevert();m.buyListing(id,1,200);
+        vm.prank(B);vm.expectRevert();m.buyListing(id,1,199);vm.warp(1500);vm.prank(B);vm.expectRevert();m.buyListing(id,1,200);
+        vm.prank(A);m.cancel(id);require(c.balanceOf(A,60000)==1);
+    }
+    function testNoUnsolicitedEscrowTransfer() public {
+        buy(A,1);vm.prank(A);vm.expectRevert();c.safeTransferFrom(A,address(m),60000,1,"");require(c.balanceOf(A,60000)==1);
+    }
     function testPaymentFailureLeavesStockAndEscrowUnchanged() public {
         vm.prank(B);t.approve(address(m),0);vm.expectRevert();buy(B,1);require(c.totalSupply(60000)==0);
+        uint256 id=listing(1);vm.prank(B);vm.expectRevert();m.buyListing(id,1,200);(,,uint256 remaining,,)=m.listings(id);require(remaining==1&&c.balanceOf(address(m),60000)==1);
     }
     function testReceiverRejectionRollsBackPaymentAndMint() public {
         RejectingBuyer b=new RejectingBuyer();t.transfer(address(b),1000);vm.expectRevert();b.buy(t,m);require(c.totalSupply(60000)==0&&t.balanceOf(address(b))==1000&&t.balanceOf(R)==0);
@@ -61,5 +81,10 @@ contract SogdiaMarketplaceTest {
     function testPrimaryScheduleAndExactQuote() public {
         vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,99);vm.warp(999);vm.expectRevert();buy(A,1);vm.warp(2000);vm.expectRevert();buy(A,1);
         vm.expectRevert();m.createOffer(60000,101,1000,0);
+    }
+    function testFuzzConservation(uint8 raw) public {
+        uint256 amount=uint256(raw)%3+1;uint256 id=listing(amount);vm.prank(B);m.buyListing(id,amount,amount*200);
+        require(c.totalSupply(60000)==amount&&c.balanceOf(B,60000)==amount&&c.balanceOf(address(m),60000)==0);
+        require(t.balanceOf(A)+t.balanceOf(B)+t.balanceOf(R)==20000);
     }
 }
