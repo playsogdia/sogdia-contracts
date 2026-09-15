@@ -23,6 +23,59 @@ buyer ── SOG ──▶ SogdiaMarketplace ── full price / commission ─�
                         └── mintPurchase / escrow ──▶ SogdiaCosmetics (ERC-1155, ERC-2981 royalty to the pool)
 ```
 
+## Trust model
+
+None of the contracts is upgradeable. Every owner is a single address set through two-step
+ownership transfer; the planned production owner is a Safe multisig.
+
+### What the owner can do
+
+- **SogdiaCosmetics:** create a new product (id, supply cap, metadata URI), once per id; bind the
+  marketplace, once; set the collection-level `contractURI`.
+- **SogdiaMarketplace:** create an offer for a product, then change its price and sale window;
+  pause and unpause primary purchases, new listings and listing purchases.
+- **SogdiaRewards:** open a reward period and finalize it with a Merkle root and the totals earned.
+
+### What the owner cannot do
+
+- Mint items outside a paid purchase, change a product's cap or metadata, or move or burn anyone's items.
+- Replace the bound marketplace or change the royalty it set.
+- Change the payment token, the reward pool address or the resale commission.
+- Take tokens out of the marketplace or the reward pool: there is no withdrawal function. Payments go
+  straight from the buyer to the pool and the seller.
+- Take escrowed listings or stop sellers from cancelling them: `cancel` is never paused.
+- Renounce ownership of the marketplace or the reward pool.
+- Charge a buyer a price changed after the buyer's quote: purchases take an `expectedTotal` and revert
+  on any difference.
+- In the reward pool: change the period length, the per-period budget cap or the claim window;
+  run two periods at once; replace a finalized root; redirect a claim to another address.
+
+`SogdiaMallDelivery` has no owner at all. Its accepted product ids are fixed at deployment.
+
+### What you still have to trust
+
+- **Reward amounts.** The owner decides who earned what from game data and publishes the Merkle root.
+  A proof shows that a claim is in the tree, not that the tree is complete or fair, so a dishonest
+  owner could leave players out or pay its own addresses. The contract bounds the damage: one period at a time, a budget of at most `maxBudgetBps` of the uncommitted pool, and
+  unclaimed rewards returning to the pool after `claimSeconds`.
+- **In-game delivery.** `SogdiaMallDelivery` only records the request; the game server delivers the
+  item. A redeemed item stays locked in the contract.
+- **Royalties elsewhere.** The collection reports its royalty through ERC-2981. Whether an external
+  marketplace pays it is up to that marketplace.
+- **The payment token.** Only plain ERC-20 tokens are supported. Balance checks reject fee-on-transfer
+  and rebasing behaviour, but they are not a defence against a malicious token.
+
+### Planned production parameters
+
+| Parameter | Value |
+|---|---|
+| Reward period length (`periodSeconds`) | 7 days |
+| Largest share of the uncommitted pool per period (`maxBudgetBps`) | 200 (2%) |
+| Claim window (`claimSeconds`) | 90 days |
+| Resale commission and ERC-2981 royalty (`feeBps`) | 250 (2.5%) |
+
+These are constructor arguments and cannot be changed after deployment.
+
 ## Build and test
 
 Requires [Foundry](https://getfoundry.sh) and Node.js.
