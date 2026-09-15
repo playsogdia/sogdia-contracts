@@ -116,6 +116,18 @@ contract SogdiaMarketplaceTest {
         vm.expectRevert();m.pause();
         vm.prank(safe);m.pause();require(m.paused());
     }
+    // External marketplaces: ERC-2981 royalty = marketplace commission to the reward reserve, fixed at binding.
+    function testRoyaltyMatchesMarketplaceFeeToReserveAndCannotChange() public {
+        (address receiver,uint256 amount)=c.royaltyInfo(60000,10000);
+        require(receiver==R&&amount==250);
+        (,uint256 small)=c.royaltyInfo(1,39800*10**18);
+        require(small==39800*10**18*250/10000);
+        require(c.supportsInterface(0x2a55205a)&&c.supportsInterface(0xd9b67a26));
+        SogdiaCosmetics unbound=new SogdiaCosmetics(address(this));
+        (address none,uint256 zero)=unbound.royaltyInfo(60000,10000);
+        require(none==address(0)&&zero==0);
+        vm.expectRevert();c.bindMarketplace(address(m));
+    }
     function testFuzzConservation(uint8 raw) public {
         uint256 amount=uint256(raw)%3+1;uint256 id=listing(amount);vm.prank(B);m.buyListing(id,amount,amount*200);
         require(c.totalSupply(60000)==amount&&c.balanceOf(B,60000)==amount&&c.balanceOf(address(m),60000)==0);
