@@ -13,6 +13,11 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /// Custom primary store and escrow resale. No arbitrary token/NFT routing or admin withdrawal.
 /// Only plain non-taxed/non-rebasing ERC20. Fees apply to this marketplace, not outside transfers.
+///
+/// Owner controls and their limits:
+/// - The owner may update an offer's price and window (`updateOffer`). Supply caps stay immutable in
+///   SogdiaCosmetics. A buyer is protected by `expectedTotal`: a price change between quote and
+///   inclusion reverts the purchase instead of charging the new price.
 contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Receiver {
     using SafeERC20 for IERC20;
     IERC20 public immutable token;
@@ -31,6 +36,7 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
     error Unavailable();
     error UnsupportedTransfer();
     event OfferCreated(uint256 indexed item, uint256 price, uint64 start, uint64 end);
+    event OfferUpdated(uint256 indexed item, uint256 price, uint64 start, uint64 end);
     event Purchased(address indexed buyer, uint256 indexed item, uint256 amount, uint256 paid);
     event Listed(uint256 indexed listing, address indexed seller, uint256 indexed item, uint256 amount, uint256 unitPrice, uint64 expiry);
     event Sold(uint256 indexed listing, address indexed buyer, uint256 amount, uint256 paid, uint256 fee);
@@ -39,11 +45,17 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
         if (address(paymentToken).code.length == 0 || address(collection).code.length == 0 || reserve == address(0) || reserve == address(this) || commissionBps >= 10000) revert InvalidInput();
         token = paymentToken; cosmetics = collection; rewardReserve = reserve; feeBps = commissionBps;
     }
-    /// Terms for an existing product, set once.
+    /// First terms for an existing product, once. Later changes go through `updateOffer`.
     function createOffer(uint256 item, uint256 price, uint64 start, uint64 end) external onlyOwner {
         (bool exists,,,) = cosmetics.product(item);
         if (!exists || price == 0 || offers[item].price != 0 || (end != 0 && (end <= start || end <= block.timestamp))) revert InvalidInput();
         offers[item] = Offer(price, start, end); emit OfferCreated(item, price, start, end);
+    }
+    /// New price and sale window for an existing offer. `end` may be in the past: that closes sales.
+    /// `end == 0` keeps the offer open indefinitely. The supply cap is not touched.
+    function updateOffer(uint256 item, uint256 price, uint64 start, uint64 end) external onlyOwner {
+        if (offers[item].price == 0 || price == 0 || (end != 0 && end <= start)) revert InvalidInput();
+        offers[item] = Offer(price, start, end); emit OfferUpdated(item, price, start, end);
     }
     function buyPrimary(uint256 item, uint256 amount, uint256 expectedTotal) external nonReentrant {
         Offer memory o = offers[item];

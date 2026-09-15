@@ -82,6 +82,19 @@ contract SogdiaMarketplaceTest {
         vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,99);vm.warp(999);vm.expectRevert();buy(A,1);vm.warp(2000);vm.expectRevert();buy(A,1);
         vm.expectRevert();m.createOffer(60000,101,1000,0);
     }
+    // owner price update; a quote made before the change reverts without taking payment.
+    function testOwnerUpdatesOfferAndStaleQuoteReverts() public {
+        vm.prank(A);vm.expectRevert();m.updateOffer(60000,150,1000,2000);
+        vm.expectRevert();m.updateOffer(60001,150,1000,2000);
+        vm.expectRevert();m.updateOffer(60000,0,1000,2000);
+        vm.expectRevert();m.updateOffer(60000,150,1500,1500);
+        m.updateOffer(60000,150,1000,0);
+        uint256 before=t.balanceOf(A);vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,100);
+        require(t.balanceOf(A)==before&&c.totalSupply(60000)==0);
+        vm.prank(A);m.buyPrimary(60000,1,150);require(t.balanceOf(R)==150);
+        (,uint256 cap,,)=c.product(60000);require(cap==3);
+        vm.warp(1200);m.updateOffer(60000,150,1000,1100);vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,150);
+    }
     function testFuzzConservation(uint8 raw) public {
         uint256 amount=uint256(raw)%3+1;uint256 id=listing(amount);vm.prank(B);m.buyListing(id,amount,amount*200);
         require(c.totalSupply(60000)==amount&&c.balanceOf(B,60000)==amount&&c.balanceOf(address(m),60000)==0);
