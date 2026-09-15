@@ -1,5 +1,7 @@
 # Sogdia contracts
 
+[![test](https://github.com/playsogdia/sogdia-contracts/actions/workflows/test.yml/badge.svg)](https://github.com/playsogdia/sogdia-contracts/actions/workflows/test.yml)
+
 Smart contracts for [Sogdia](https://sogdia.gg), a browser MMORPG: the item store, the player
 marketplace and the player reward pool. They are written for Robinhood Chain (testnet chain id
 46630, mainnet 4663) and paid in the SOG token.
