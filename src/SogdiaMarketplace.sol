@@ -9,6 +9,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /// Custom primary store and escrow resale. No arbitrary token/NFT routing or admin withdrawal.
@@ -18,7 +19,11 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 /// - The owner may update an offer's price and window (`updateOffer`). Supply caps stay immutable in
 ///   SogdiaCosmetics. A buyer is protected by `expectedTotal`: a price change between quote and
 ///   inclusion reverts the purchase instead of charging the new price.
-contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Receiver {
+/// - The owner may pause new primary purchases, new listings and listing purchases. `cancel` is never
+///   paused, so escrowed items can always return to their sellers.
+/// - Ownership cannot be renounced: a renounced, paused market could never resume sales.
+///   The intended production owner is a Safe multisig accepted through Ownable2Step.
+contract SogdiaMarketplace is Ownable2Step, Pausable, ReentrancyGuard, ERC165, IERC1155Receiver {
     using SafeERC20 for IERC20;
     IERC20 public immutable token;
     SogdiaCosmetics public immutable cosmetics;
@@ -57,7 +62,10 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
         if (offers[item].price == 0 || price == 0 || (end != 0 && end <= start)) revert InvalidInput();
         offers[item] = Offer(price, start, end); emit OfferUpdated(item, price, start, end);
     }
-    function buyPrimary(uint256 item, uint256 amount, uint256 expectedTotal) external nonReentrant {
+    function pause() external onlyOwner { _pause(); }
+    function unpause() external onlyOwner { _unpause(); }
+    function renounceOwnership() public pure override { revert InvalidInput(); }
+    function buyPrimary(uint256 item, uint256 amount, uint256 expectedTotal) external nonReentrant whenNotPaused {
         Offer memory o = offers[item];
         if (o.price == 0 || amount == 0 || block.timestamp < o.start || (o.end != 0 && block.timestamp >= o.end)) revert Unavailable();
         uint256 total = o.price * amount;
@@ -66,7 +74,7 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
         cosmetics.mintPurchase(msg.sender, item, amount);
         emit Purchased(msg.sender, item, amount, total);
     }
-    function list(uint256 item, uint256 amount, uint256 unitPrice, uint64 expiry) external nonReentrant returns (uint256 id) {
+    function list(uint256 item, uint256 amount, uint256 unitPrice, uint64 expiry) external nonReentrant whenNotPaused returns (uint256 id) {
         if (amount == 0 || unitPrice == 0 || expiry <= block.timestamp || msg.sender == rewardReserve) revert InvalidInput();
         id = nextListing++;
         listings[id] = Listing(msg.sender, item, amount, unitPrice, expiry);
@@ -75,7 +83,7 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
         if (receivingFrom != address(0)) revert UnsupportedTransfer();
         emit Listed(id, msg.sender, item, amount, unitPrice, expiry);
     }
-    function buyListing(uint256 id, uint256 amount, uint256 expectedTotal) external nonReentrant {
+    function buyListing(uint256 id, uint256 amount, uint256 expectedTotal) external nonReentrant whenNotPaused {
         Listing storage l = listings[id];
         if (l.seller == address(0) || msg.sender == l.seller || amount == 0 || amount > l.remaining || block.timestamp >= l.expiry) revert Unavailable();
         uint256 total = l.unitPrice * amount;
@@ -87,6 +95,7 @@ contract SogdiaMarketplace is Ownable2Step, ReentrancyGuard, ERC165, IERC1155Rec
         cosmetics.safeTransferFrom(address(this), msg.sender, l.item, amount, "");
         emit Sold(id, msg.sender, amount, total, fee);
     }
+    /// Never paused.
     function cancel(uint256 id) external nonReentrant {
         Listing storage l = listings[id];
         uint256 amount = l.remaining;

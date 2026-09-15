@@ -95,6 +95,27 @@ contract SogdiaMarketplaceTest {
         (,uint256 cap,,)=c.product(60000);require(cap==3);
         vm.warp(1200);m.updateOffer(60000,150,1000,1100);vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,150);
     }
+    // pause stops primary sales, new listings and listing purchases; cancel stays open.
+    function testPauseBlocksSalesButNeverCancel() public {
+        uint256 id=listing(1);buy(B,1);vm.prank(B);c.setApprovalForAll(address(m),true);
+        vm.prank(A);vm.expectRevert();m.pause();
+        m.pause();
+        vm.prank(A);vm.expectRevert();m.buyPrimary(60000,1,100);
+        vm.prank(B);vm.expectRevert();m.list(60000,1,200,1500);
+        vm.prank(B);vm.expectRevert();m.buyListing(id,1,200);
+        vm.prank(A);m.cancel(id);require(c.balanceOf(A,60000)==1&&c.balanceOf(address(m),60000)==0);
+        m.unpause();buy(A,1);require(c.totalSupply(60000)==3);
+    }
+    // no renounce; ownership moves only when the new owner (a Safe in production) accepts.
+    function testOwnershipCannotBeRenouncedAndNeedsAcceptance() public {
+        address safe=address(0x5AFE);
+        vm.expectRevert();m.renounceOwnership();
+        m.transferOwnership(safe);require(m.owner()==address(this)&&m.pendingOwner()==safe);
+        vm.prank(A);vm.expectRevert();m.acceptOwnership();
+        vm.prank(safe);m.acceptOwnership();require(m.owner()==safe);
+        vm.expectRevert();m.pause();
+        vm.prank(safe);m.pause();require(m.paused());
+    }
     function testFuzzConservation(uint8 raw) public {
         uint256 amount=uint256(raw)%3+1;uint256 id=listing(amount);vm.prank(B);m.buyListing(id,amount,amount*200);
         require(c.totalSupply(60000)==amount&&c.balanceOf(B,60000)==amount&&c.balanceOf(address(m),60000)==0);
