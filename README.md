@@ -22,7 +22,7 @@ How the pieces connect:
 ```
 buyer ── SOG ──▶ SogdiaMarketplace ── full price / commission ──▶ SogdiaRewards ── claims ──▶ players
                         │
-                        └── mintPurchase / escrow ──▶ SogdiaCosmetics (ERC-1155, ERC-2981 royalty to the pool)
+                        └── mintPurchase / escrow ──▶ SogdiaCosmetics (ERC-1155)
 ```
 
 ## Trust model
@@ -33,7 +33,8 @@ ownership transfer; the planned production owner is a Safe multisig.
 ### What the owner can do
 
 - **SogdiaCosmetics:** create a new product (id, supply cap, metadata URI), once per id; bind the
-  marketplace, once; set the collection-level `contractURI`.
+  marketplace, once; set the collection-level `contractURI`; set the ERC-2981 royalty receiver and
+  rate for external marketplaces, up to 10% (`MAX_ROYALTY_BPS`).
 - **SogdiaMarketplace:** create an offer for a product, then change its price and sale window;
   pause and unpause primary purchases, new listings and listing purchases.
 - **SogdiaRewards:** open a reward period and finalize it with a Merkle root and the totals earned.
@@ -41,7 +42,7 @@ ownership transfer; the planned production owner is a Safe multisig.
 ### What the owner cannot do
 
 - Mint items outside a paid purchase, change a product's cap or metadata, or move or burn anyone's items.
-- Replace the bound marketplace or change the royalty it set.
+- Replace the bound marketplace.
 - Change the payment token, the reward pool address or the resale commission.
 - Take tokens out of the marketplace or the reward pool: there is no withdrawal function. Payments go
   straight from the buyer to the pool and the seller.
@@ -58,12 +59,15 @@ ownership transfer; the planned production owner is a Safe multisig.
 
 - **Reward amounts.** The owner decides who earned what from game data and publishes the Merkle root.
   A proof shows that a claim is in the tree, not that the tree is complete or fair, so a dishonest
-  owner could leave players out or pay its own addresses. The contract bounds the damage: one period at a time, a budget of at most `maxBudgetBps` of the uncommitted pool, and
-  unclaimed rewards returning to the pool after `claimSeconds`.
+  owner could leave players out or pay its own addresses. The contract bounds the damage: one period
+  at a time, a budget of at most `maxBudgetBps` of the uncommitted pool, and unclaimed rewards returning to the pool after `claimSeconds`.
 - **In-game delivery.** `SogdiaMallDelivery` only records the request; the game server delivers the
   item. A redeemed item stays locked in the contract.
-- **Royalties elsewhere.** The collection reports its royalty through ERC-2981. Whether an external
-  marketplace pays it is up to that marketplace.
+- **Royalties elsewhere.** Royalties from external marketplaces such as OpenSea go to the owner's
+  royalty wallet, not to a contract. Half of what accumulates is planned to be converted to SOG and
+  deposited into the reward pool with `fund`, which emits a public `Funded` event; this is a manual
+  commitment, not enforced on-chain. Whether an external marketplace pays ERC-2981 royalties at all is
+  up to that marketplace.
 - **The payment token.** Only plain ERC-20 tokens are supported. Balance checks reject fee-on-transfer
   and rebasing behaviour, but they are not a defence against a malicious token.
 
@@ -74,9 +78,10 @@ ownership transfer; the planned production owner is a Safe multisig.
 | Reward period length (`periodSeconds`) | 7 days |
 | Largest share of the uncommitted pool per period (`maxBudgetBps`) | 200 (2%) |
 | Claim window (`claimSeconds`) | 90 days |
-| Resale commission and ERC-2981 royalty (`feeBps`) | 250 (2.5%) |
+| Resale commission on SogdiaMarketplace (`feeBps`) | 250 (2.5%) |
 
-These are constructor arguments and cannot be changed after deployment.
+These are constructor arguments and cannot be changed after deployment. The ERC-2981 royalty for external
+marketplaces is planned at 500 (5%) and can be changed by the owner up to 10%.
 
 ## Build and test
 
