@@ -19,6 +19,8 @@ import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProo
 ///   earlier than its end;
 /// - every period lasts exactly `periodSeconds` (production: 7 days);
 /// - a period's budget is at most `maxBudgetBps` of the uncommitted reserve (production: 200 = 2%);
+/// - a claim is valid for `claimSeconds` after finalization (production: 90 days); afterwards anyone
+///   may call `expire` and the unclaimed remainder returns to the reserve.
 /// These bound, but cannot remove, the trust in the publisher described above.
 contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -27,9 +29,12 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
     IERC20 public immutable token;
     uint64 public immutable periodSeconds;
     uint16 public immutable maxBudgetBps;
+    uint64 public immutable claimSeconds;
     uint256 public reserved;
     /// The most recently opened period; zero before the first.
     bytes32 public currentPeriod;
+    mapping(bytes32 => uint64) public finalizedAt;
+    mapping(bytes32 => bool) public expired;
 
     struct Period {
         uint64 start;
@@ -60,19 +65,21 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
     event PeriodFinalized(
         bytes32 indexed period, bytes32 root, uint256 goldTotal, uint256 caravanTotal, uint256 released
     );
+    event PeriodExpired(bytes32 indexed period, uint256 released);
     event Claimed(
         bytes32 indexed period, uint256 indexed index, address indexed recipient, uint8 channel, uint256 amount
     );
 
-    constructor(IERC20 rewardToken, address initialOwner, uint64 periodLength, uint16 budgetBps)
+    constructor(IERC20 rewardToken, address initialOwner, uint64 periodLength, uint16 budgetBps, uint64 claimWindow)
         Ownable(initialOwner)
     {
-        if (address(rewardToken).code.length == 0 || periodLength == 0 || budgetBps == 0 || budgetBps > 10000) {
+        if (address(rewardToken).code.length == 0 || periodLength == 0 || budgetBps == 0 || budgetBps > 10000 || claimWindow == 0) {
             revert InvalidInput();
         }
         token = rewardToken;
         periodSeconds = periodLength;
         maxBudgetBps = budgetBps;
+        claimSeconds = claimWindow;
     }
 
     function available() public view returns (uint256) {
@@ -128,6 +135,7 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
         uint256 total = goldTotal + caravanTotal;
         if ((total == 0) != (root == bytes32(0))) revert InvalidInput();
         p.finalized = true;
+        finalizedAt[id] = uint64(block.timestamp);
         p.root = root;
         p.goldRemaining = goldTotal;
         p.caravanRemaining = caravanTotal;
@@ -164,7 +172,7 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
         bytes32[] calldata proof
     ) external nonReentrant {
         Period storage p = periods[id];
-        if (!p.finalized) revert InvalidPeriod();
+        if (!p.finalized || expired[id] || block.timestamp > finalizedAt[id] + claimSeconds) revert InvalidPeriod();
         if (recipient == address(0) || recipient == address(this) || amount == 0 || channel > 1) {
             revert InvalidInput();
         }
@@ -189,6 +197,18 @@ contract SogdiaRewards is Ownable2Step, ReentrancyGuard {
                 || token.balanceOf(recipient) != beforeRecipient + amount
         ) revert UnsupportedTransfer();
         emit Claimed(id, index, recipient, channel, amount);
+    }
+
+    /// After the claim window anyone may return a finalized period's unclaimed remainder to the reserve.
+    function expire(bytes32 id) external nonReentrant {
+        Period storage p = periods[id];
+        if (!p.finalized || expired[id] || block.timestamp <= finalizedAt[id] + claimSeconds) revert InvalidPeriod();
+        uint256 released = p.goldRemaining + p.caravanRemaining;
+        expired[id] = true;
+        p.goldRemaining = 0;
+        p.caravanRemaining = 0;
+        reserved -= released;
+        emit PeriodExpired(id, released);
     }
 
     /// A pending period must not become impossible to finalize through accidental renunciation.
