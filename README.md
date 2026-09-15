@@ -64,7 +64,7 @@ ownership transfer; the planned production owner is a Safe multisig.
 - **In-game delivery.** `SogdiaMallDelivery` only records the request; the game server delivers the
   item. A redeemed item stays locked in the contract.
 - **Royalties elsewhere.** Royalties from external marketplaces such as OpenSea go to the owner's
-  royalty wallet, not to a contract. Half of what accumulates is planned to be converted to SOG and
+  royalty wallet [`0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0`](https://robinhoodchain.blockscout.com/address/0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0), not to a contract. Half of what accumulates is planned to be converted to SOG and
   deposited into the reward pool with `fund`, which emits a public `Funded` event; this is a manual
   commitment, not enforced on-chain. Whether an external marketplace pays ERC-2981 royalties at all is
   up to that marketplace.
