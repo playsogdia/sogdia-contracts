@@ -128,6 +128,14 @@ contract SogdiaMarketplaceTest {
         require(none==address(0)&&zero==0);
         vm.expectRevert();c.bindMarketplace(address(m));
     }
+    // ERC-7572 collection metadata: owner-only, non-empty.
+    function testContractURIIsOwnerOnly() public {
+        require(bytes(c.contractURI()).length==0);
+        c.setContractURI("https://assets.sogdia.gg/nft/collection.json");
+        require(keccak256(bytes(c.contractURI()))==keccak256("https://assets.sogdia.gg/nft/collection.json"));
+        vm.prank(A);vm.expectRevert();c.setContractURI("https://evil.example/x.json");
+        vm.expectRevert();c.setContractURI("");
+    }
     function testFuzzConservation(uint8 raw) public {
         uint256 amount=uint256(raw)%3+1;uint256 id=listing(amount);vm.prank(B);m.buyListing(id,amount,amount*200);
         require(c.totalSupply(60000)==amount&&c.balanceOf(B,60000)==amount&&c.balanceOf(address(m),60000)==0);

@@ -18,14 +18,19 @@ interface ISogdiaMarketTerms {
 /// - ERC-2981 royalty equal to the bound marketplace's commission, paid to its reward reserve, set once at
 ///   `bindMarketplace` and never changeable, so resales elsewhere can pay the same 2.5% to the pool.
 ///   Whether a given external marketplace honours ERC-2981 is up to that marketplace.
+/// - ERC-7572 `contractURI` for collection name, logo and description; owner-updatable. Each product's
+///   own metadata URI stays immutable.
 contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
     struct Product { bool exists; uint256 cap; uint256 minted; string metadata; }
     mapping(uint256 => Product) private products;
     address public marketplace;
+    string private collectionURI;
     error InvalidInput();
     error Unavailable();
     event ProductCreated(uint256 indexed id, uint256 cap, string metadata);
     event MarketplaceBound(address indexed marketplace);
+    /// ERC-7572.
+    event ContractURIUpdated();
     constructor(address initialOwner) ERC1155("") Ownable(initialOwner) {}
     /// cap=0 explicitly denotes an unlimited standard collection, not sold out.
     function createProduct(uint256 id, uint256 cap, string calldata metadata) external onlyOwner {
@@ -40,6 +45,12 @@ contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
         ISogdiaMarketTerms terms = ISogdiaMarketTerms(market);
         _setDefaultRoyalty(terms.rewardReserve(), terms.feeBps());
         emit MarketplaceBound(market);
+    }
+    function contractURI() external view returns (string memory) { return collectionURI; }
+    function setContractURI(string calldata newURI) external onlyOwner {
+        if (bytes(newURI).length == 0) revert InvalidInput();
+        collectionURI = newURI;
+        emit ContractURIUpdated();
     }
     function supportsInterface(bytes4 id) public view override(ERC1155, ERC2981) returns (bool) {
         return super.supportsInterface(id);
