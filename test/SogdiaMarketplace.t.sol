@@ -136,6 +136,12 @@ contract SogdiaMarketplaceTest {
         uint256 id=listing(1);vm.prank(B);m.buyListing(id,1,200);
         require(t.balanceOf(A)==10095&&t.balanceOf(R)==105);
     }
+    // The collection's own title, for a marketplace that has no ERC-1155 field to read it from.
+    function testCollectionNameAndSymbol() public view {
+        require(keccak256(bytes(c.name()))==keccak256("Sogdia Item Mall"));
+        require(keccak256(bytes(c.symbol()))==keccak256("SOGDIA"));
+    }
+
     // ERC-7572 collection metadata: owner-only, non-empty.
     function testContractURIIsOwnerOnly() public {
         require(bytes(c.contractURI()).length==0);

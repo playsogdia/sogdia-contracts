@@ -12,11 +12,17 @@ import {ERC2981} from "@openzeppelin/contracts/token/common/ERC2981.sol";
 /// - ERC-2981 royalty for resales there, paid to an owner-set receiver at an owner-set rate of at most
 ///   `MAX_ROYALTY_BPS`. It is separate from the bound marketplace's own commission and never affects
 ///   sales through that marketplace. Whether an external marketplace honours ERC-2981 is up to it.
+/// - `name()` and `symbol()`, which ERC-1155 does not define. A marketplace that indexes this
+///   collection reads them for its title: without them OpenSea showed the contract address where the
+///   name belongs, with the `contractURI` description right underneath it (checked on a throwaway
+///   collection, 2026-09-16). They are constants because the collection is one collection forever.
 /// - ERC-7572 `contractURI` for collection name, logo and description; owner-updatable. Each product's
 ///   own metadata URI stays immutable.
 contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
     struct Product { bool exists; uint256 cap; uint256 minted; string metadata; }
     mapping(uint256 => Product) private products;
+    string public constant name = "Sogdia Item Mall";
+    string public constant symbol = "SOGDIA";
     uint96 public constant MAX_ROYALTY_BPS = 1000;
     address public marketplace;
     string private collectionURI;
