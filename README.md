@@ -12,7 +12,7 @@ marketplace and the player reward pool. They are written for Robinhood Chain (te
 
 | Contract | Purpose |
 |---|---|
-| [`SogdiaCosmetics`](src/SogdiaCosmetics.sol) | ERC-1155 collection of game items, named `Sogdia Item Mall` (`SOGDIA`). Each product has an immutable metadata URI and supply cap (0 = unlimited). Only the bound marketplace can mint. |
+| [`SogdiaCosmetics`](src/SogdiaCosmetics.sol) | ERC-1155 collection of game items, named `Sogdia` (`SOGDIA`). Each product has an immutable metadata URI and supply cap (0 = unlimited). Only the bound marketplace can mint. |
 | [`SogdiaMarketplace`](src/SogdiaMarketplace.sol) | Primary store and escrow resale for the collection, paid in one ERC-20. Primary sales pay the full price to the reward pool; resales pay a commission (`feeBps`) to the pool and the rest to the seller. |
 | [`SogdiaRewards`](src/SogdiaRewards.sol) | The reward pool. Funded in the same ERC-20, paid out to players in fixed-length periods through Merkle claims. |
 | [`SogdiaMallDelivery`](src/SogdiaMallDelivery.sol) | One-way redemption: an item handed to this contract is locked for good and a `DeliveryQueued` event tells the game server what to deliver to which character. |

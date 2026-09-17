@@ -21,7 +21,7 @@ import {ERC2981} from "@openzeppelin/contracts/token/common/ERC2981.sol";
 contract SogdiaCosmetics is ERC1155Supply, ERC2981, Ownable2Step {
     struct Product { bool exists; uint256 cap; uint256 minted; string metadata; }
     mapping(uint256 => Product) private products;
-    string public constant name = "Sogdia Item Mall";
+    string public constant name = "Sogdia";
     string public constant symbol = "SOGDIA";
     uint96 public constant MAX_ROYALTY_BPS = 1000;
     address public marketplace;
