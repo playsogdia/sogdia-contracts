@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-18T23:51:02.631Z",
+  "origin": "https://marketplace.sogdia.gg",
+  "chain": "4663",
+  "token": "SOG",
+  "paused": false,
+  "visiblePrices": [
+    {
+      "id": "60000",
+      "priceSog": "24000",
+      "visible": true
+    },
+    {
+      "id": "67009",
+      "priceSog": "39800",
+      "visible": true
+    },
+    {
+      "id": "38542",
+      "priceSog": "100",
+      "visible": true
+    },
+    {
+      "id": "25261",
+      "priceSog": "8800",
+      "visible": true
+    },
+    {
+      "id": "25235",
+      "priceSog": "800",
+      "visible": true
+    }
+  ],
+  "hiddenPackageCodes": 59,
+  "scope": "Public browser price and sales-state checks; no wallet purchase submitted"
+}

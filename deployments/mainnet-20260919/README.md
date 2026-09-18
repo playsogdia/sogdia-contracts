@@ -21,14 +21,14 @@ Parameters:604800-second periods,200bps maximum reward budget,7776000-second cla
 250bps resale fee and500bps external royalty to `0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0`.
 Deployment receipt gas fees:0.00059168606614ETH. Subsequent funding is recorded below.
 
-The marketplace is paused. Offers are not configured. Collection publication and
-product registration are recorded in the metadata evidence files.
-No reward period was opened. Game, collectors and frontend have not been switched to
-these addresses. Mainnet prices must be reviewed before creating offers.
+The marketplace is now open with 176 primary offers. The game, observers and both
+public frontends use these mainnet addresses. Collection publication, product
+registration and sale activation are recorded below. No reward period was opened.
 
 The delivery signer was generated separately from the owner and is retained in a
-local secret file with0600 permissions. Install that key in the game runtime before
-activating signed delivery. No private key is included in this evidence.
+local secret file with0600 permissions. The dedicated key is installed as a
+read-only game Docker secret; live delivery signatures passed verification.
+No private key is included in this evidence.
 
 ## Explorer verification
 
@@ -41,8 +41,8 @@ Compiler0.8.30, optimizer200; Rewards uses Paris and the other contracts use Can
 ## Scope
 
 Owner authorized this mainnet deployment with the supplied mainnet signing key.
-Existing testnet deployments and receipts were not modified. Completing the public
-store requires catalogue pricing/publication, runtime configuration and acceptance.
+Existing testnet deployments and receipts were not modified. Catalogue publication, runtime configuration and public sale activation are
+recorded below.
 
 ## Initial reward-pool funding
 
@@ -80,7 +80,30 @@ Receipt gas fees: 0.002238413369914 ETH.
 See `metadata-plan.json`, `metadata-publication.json`, `metadata-simulation.json`
 and `metadata-registration.json` for inputs, publication checks and receipts.
 
-This registers the collection catalogue; offers/prices and runtime activation are
-still pending. No NFT was minted and OpenSea indexing was not independently
-verified by this operation. Hidden storefront products retain their separate
-visibility policy.
+This metadata operation registered the collection catalogue without minting NFTs.
+OpenSea indexing was not independently verified. Hidden storefront products
+retain their separate visibility policy.
+
+## Primary sale activation
+
+The owner selected a fixed **$0.001 per SOG** calculation basis on 2026-09-19.
+This is not a live market quotation. At $0.10 per native Silk, the rule yields
+100 SOG per Silk, including **24,000 SOG** for the custom hat.
+
+All **176 visible products** have exact-price, untimed primary offers; existing
+supply caps are unchanged. The **32 hidden catalogue products** have no offers.
+The shared hidden list remains 59 package codes. `sales-plan.json` records inputs.
+
+A full mainnet-fork simulation passed before broadcast (`sales-simulation.json`).
+All 176 offer transactions and the unpause transaction succeeded on mainnet;
+readback verified every price, offer window and hidden-product exclusion.
+`sales-registration.json` contains the receipts. Receipt gas fees total
+0.000854475815496 ETH. Unpause transaction:
+`0xca473b88ca807e02aaad0dc25c6607c0268728c6103c4d4ac6773a4a0e2de816`.
+
+Public API checks before and after opening are recorded in
+`sales-api-before-open.json` and `sales-api-live.json`; both game and marketplace
+origins match all 176 prices, 208 products, chain4663 and SOG.
+`sales-browser-live.json` records representative production product prices and
+the shared hidden list. No wallet purchase was submitted by these checks,
+and OpenSea indexing was not independently verified.

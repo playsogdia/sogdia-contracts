@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-09-18T23:50:56.028Z",
+  "expectedPaused": false,
+  "origins": [
+    {
+      "origin": "https://game.sogdia.gg",
+      "products": 208,
+      "offersVerified": 176,
+      "hiddenWithoutOffers": 32,
+      "chain": "4663",
+      "token": "SOG",
+      "paused": false
+    },
+    {
+      "origin": "https://marketplace.sogdia.gg",
+      "products": 208,
+      "offersVerified": 176,
+      "hiddenWithoutOffers": 32,
+      "chain": "4663",
+      "token": "SOG",
+      "paused": false
+    }
+  ]
+}
