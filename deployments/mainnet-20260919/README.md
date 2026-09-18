@@ -41,3 +41,18 @@ Compiler0.8.30, optimizer200; Rewards uses Paris and the other contracts use Can
 Owner authorized this mainnet deployment with the supplied mainnet signing key.
 Existing testnet deployments and receipts were not modified. Completing the public
 store requires catalogue pricing/publication, runtime configuration and acceptance.
+
+## Initial reward-pool funding
+
+The owner instructed depositing the complete SOG balance of the deployment wallet.
+`fund()` deposited **104477611.940298507462686567 SOG** into SogdiaRewards.
+Transaction: `0xfeb5d6bbcd72a1c581fbf1e99dabe6b823c9e8f997d1effb97761489679f5c2f`.
+
+The receipt succeeded and its Funded event matched the sender and exact amount.
+Readback confirmed the full pool balance,zero remaining sender SOG and zero remaining
+allowance. See `funding.json`. Funding does not itself open a reward period or enable
+player claims.
+
+The owner reported successfully verifying SogdiaRewards through the Blockscout UI.
+This report is distinct from our blocked automated verification requests; the other
+three contracts are not recorded as verified.

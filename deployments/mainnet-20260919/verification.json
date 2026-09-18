@@ -1,8 +1,8 @@
 {
   "SogdiaRewards": {
     "address": "0x26C2E78D3b78A3207f940E6bf3E84026926cc87C",
-    "status": "blocked",
-    "reason": "Explorer HTTP403 Cloudflare challenge; not source-verified"
+    "status": "verified (owner-reported)",
+    "evidence": "Owner completed Blockscout UI verification and reported success; API remains blocked."
   },
   "SogdiaCosmetics": {
     "address": "0x9927d68d0EfaEA91011Aa321C799786d91Cc518D",

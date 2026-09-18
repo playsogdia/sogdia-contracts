@@ -6,6 +6,14 @@ Smart contracts for [Sogdia](https://sogdia.gg), a browser MMORPG: the item stor
 marketplace and the player reward pool. They are written for Robinhood Chain (testnet chain id
 46630, mainnet 4663) and paid in the SOG token.
 
+## Mainnet deployment
+
+Deployed on Robinhood Chain mainnet (4663). The payment token is
+`0x2513aa8c23426968402b57ab76ed61fc4af9d8f6`.
+The reward pool received **104477611.940298507462686567 SOG** through `fund()`.
+[Addresses, transaction receipts and activation status](deployments/mainnet-20260919/README.md).
+The marketplace remains paused; funding alone does not activate reward claims.
+
 ## Contracts
 
 | Contract | Purpose |

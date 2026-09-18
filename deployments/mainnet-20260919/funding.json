@@ -1,0 +1,36 @@
+{
+  "chainId": 4663,
+  "token": "0x2513aa8c23426968402b57ab76ed61fc4af9d8f6",
+  "from": "0x97906F9CF391a9506A141cF8C0c6AA7A4c965BE4",
+  "reserve": "0x26C2E78D3b78A3207f940E6bf3E84026926cc87C",
+  "amount": "104477611940298507462686567",
+  "formattedAmount": "104477611.940298507462686567",
+  "reserveBalanceBefore": "0",
+  "complete": true,
+  "transactions": [
+    {
+      "name": "approve",
+      "hash": "0x52a4db5cda276f315964ae1b578da91e44a64ffbca2f651796d545a3d4ad5ff0",
+      "nonce": 8,
+      "blockNumber": 66562826,
+      "status": 1,
+      "gasUsed": "46009",
+      "gasPrice": "149698000"
+    },
+    {
+      "name": "fund",
+      "hash": "0xfeb5d6bbcd72a1c581fbf1e99dabe6b823c9e8f997d1effb97761489679f5c2f",
+      "nonce": 9,
+      "blockNumber": 66562872,
+      "status": 1,
+      "gasUsed": "55977",
+      "gasPrice": "139098000"
+    }
+  ],
+  "fundedEventVerified": true,
+  "reserveBalanceAfter": "104477611940298507462686567",
+  "walletBalanceAfter": "0",
+  "remainingAllowance": "0",
+  "available": "104477611940298507462686567",
+  "checkedAt": "2026-09-18T21:55:50.209Z"
+}
