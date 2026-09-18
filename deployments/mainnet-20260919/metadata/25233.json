@@ -1,0 +1,24 @@
+{
+  "name": "Middle Defense Gender Switch Tool",
+  "description": "Can switch gender of defense equipment(Limit: Lvl. 6).\n\n**How To Use**\nWhen you select the defense equipment after clicking on this tool, the gender restriction will be changed.\n\n**Restriction**\nUsable when the item to change is in the inventory. Only items up to level 6 are eligible.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25233.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_EQUIP_TRANSGENDER_2",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Others"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

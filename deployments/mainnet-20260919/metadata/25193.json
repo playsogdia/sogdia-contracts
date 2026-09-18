@@ -1,0 +1,24 @@
+{
+  "name": "Skill Edit Potion",
+  "description": "Reallocate 100% of allotted sp and decreases skill and mastery level by one.\n\n**How To Use**\nWhen you use this item, the reallocation window will open. Select the skill you want to edit and click the confirm button.\n\n**Restriction**\nNone\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25193.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_SKILL_RESTORATION_POTION",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Special"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

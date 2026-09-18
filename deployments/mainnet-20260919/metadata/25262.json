@@ -1,0 +1,24 @@
+{
+  "name": "Clock of Reincarnation",
+  "description": "An item that extends the expired store pet's rental period by 4 weeks. Mysterious power lies in the clock of reincarnation that has the ability to restore time.\n\n**How To Use**\nAffect is applied in the instant of use. Must be level 5 or higher to use.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25262.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_EXTENSION",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Pet Items"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

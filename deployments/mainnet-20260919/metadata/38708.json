@@ -1,0 +1,25 @@
+{
+  "name": "Arabian Hat (F)",
+  "description": "Hat worn by Arabian dancers\n\nKept in your wallet. Wear on a compatible character while you own it. Selling or transferring your last copy removes the appearance.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/38708.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/38708",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_AVATAR_W_ARABIA_HAT",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Hat"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Wear while owned"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Limited to 100"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Three Footed Crow Summon Scroll",
+  "description": "Bird of a legend, also said to be the messenger of the sun, Three Footed Crow lives at the sun eating the flame of the sun.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable; this pet has no rental expiry. Recall and resummon do not consume it.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25271.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/25271",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_RAVEN_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Growth Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · no rental expiry"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

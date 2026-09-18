@@ -1,0 +1,24 @@
+{
+  "name": "Spartan Accessory (F)",
+  "description": "Accessory for Spartan Soldier dress\n\nThis avatar item is tradable, but its game attachment or special-use integration is not enabled. Do not buy it expecting current in-game use.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/78094.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_AVATAR_W_SPARTA_ATTACH",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Attachment"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Game use pending"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Limited to 200"
+    }
+  ]
+}

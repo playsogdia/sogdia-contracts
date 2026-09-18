@@ -1,0 +1,25 @@
+{
+  "name": "White Wolf Summon Scroll",
+  "description": "A scroll that summons the white wolf. The wolf of the Barbar tribe resembles the leopard and has strength close to the white tiger.\nThese wolves are captured by lucky traders crossing the trade road and are sold at high price.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable; this pet has no rental expiry. Recall and resummon do not consume it.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25265.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/25265",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_FLUTE_WHITE",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Growth Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · no rental expiry"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

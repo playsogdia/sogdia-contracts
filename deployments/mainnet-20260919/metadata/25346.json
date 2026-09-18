@@ -1,0 +1,24 @@
+{
+  "name": "Magic Stone of Immortal(Lvl.8)",
+  "description": "Increases the \"immortal\" attribute on equipment items by 1.(The attribute will be added if it does not exist)\nImmortal attribute prevents the item from being destroyed when it fails from enchanting. (It does not prevent the enchantment level becoming 0)\n\n**How To Use**\n1. Open the alchemy window(Y) and choose attribute grant.\n2. At the left slot of the attribute grant window place the equipment item, on the right slot place the alchemy stone, and then press the \"compound\" button.\n\n**Restriction**\nNone.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25346.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_ETC_ARCHEMY_MAGICSTONE_ATHANASIA_08",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Alchemy"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Immortal"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

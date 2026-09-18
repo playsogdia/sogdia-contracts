@@ -1,0 +1,24 @@
+{
+  "name": "Kiklopes Balloon (Intelligence Increase)",
+  "description": "This balloon, shaped like a Kiklopes, increases INT for 30 minutes.\n\n**Note**\nCan be used simultaneously with STR and INT increase balloons.\nCannot be used simultaneously with damage increase and damage absorption balloons.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/51734.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_BALLOON_B_KYKLOPES_INT",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Balloon"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

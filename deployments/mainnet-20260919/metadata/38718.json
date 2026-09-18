@@ -1,0 +1,25 @@
+{
+  "name": "Sylph Summon Scroll",
+  "description": "A Sylph that came from the Western Europe. Being a Sylph, the size is small, heigh being only 1/4 of a normal human being. Occasionally magic is used, however very feeble. Sylph is very smart and very friendly to humans.\n\n**How To Use**\nThe time is applied when the scroll is used, and player must be level 5 or higher to be able to use.\n\n**Restriction**\nCannot be summoned simultaneously with other store pets.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable. Rental lasts 40320 minutes (28 days) from first pet creation; recall, relog and resummon do not reset the clock.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/38718.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/38718",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_BROWNIE_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Ability Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · 40320 minutes"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

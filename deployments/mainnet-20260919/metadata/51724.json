@@ -1,0 +1,24 @@
+{
+  "name": "Edenp Balloon (Damage absorb)",
+  "description": "This balloon, shaped like a Edenp, absorbs damage for 30 minutes.\n\n**Note**\nCan be used simultaneously with damage increase and damage absorption balloons.\nCannot be used simultaneously with STR and INT increase balloons.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/51724.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_BALLOON_A_EDENP_DMG_ABS",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Balloon"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

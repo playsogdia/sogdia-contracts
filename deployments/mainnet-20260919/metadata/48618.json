@@ -1,0 +1,25 @@
+{
+  "name": "Fierce Tiger",
+  "description": "Item that summons Fierce Tiger.\n\n**How To Use**\nHP of COS will change depending on the user's level.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/48618.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/48618",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_C_TIGER_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Vehicle"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

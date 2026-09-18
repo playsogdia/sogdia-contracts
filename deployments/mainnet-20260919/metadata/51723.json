@@ -1,0 +1,24 @@
+{
+  "name": "Devil's Spirit A Grade(F)",
+  "description": "When you equip this Devil's spirit, you will gain basic options(HP/MP) of your character. If you use its power, you can transform and able to use devil's power for limited time.\n\nThis avatar item is tradable, but its game attachment or special-use integration is not enabled. Do not buy it expecting current in-game use.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/51723.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_AVATAR_W_NASRUN_YELLOW",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Premium"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Awakening Item"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Game use pending"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

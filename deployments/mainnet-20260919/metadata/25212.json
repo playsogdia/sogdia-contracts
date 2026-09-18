@@ -1,0 +1,24 @@
+{
+  "name": "Instant Return Scroll",
+  "description": "Returns to the town immediately.\n\n**How To Use**\nWhen you use the scroll, you can return to the town that you select as home.\n\n**Restriction**\nNone\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25212.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_RETURN_SCROLL_HIGH_SPEED",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Order"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

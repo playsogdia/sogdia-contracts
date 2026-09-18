@@ -1,0 +1,24 @@
+{
+  "name": "Inventory expansion item",
+  "description": "This item will add 32 slots into your inventory permanently\n**Limitation **\nLimited to one time only per character.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/51740.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_INVENTORY_ADDITION",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Others"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

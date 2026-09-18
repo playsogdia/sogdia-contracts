@@ -1,0 +1,25 @@
+{
+  "name": "Combination Stall Decoration",
+  "description": "A cute Earth Ghost, Mangryang, and Big-eyed Ghost stall decoration.\n\n**How To Use**\nWhen this item is used, the stall will display the decoration permanently.\n\n**Restriction**\nNone\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25255.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/25255",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_BOOTH_SPECIAL_MONSTER_01",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Stall"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

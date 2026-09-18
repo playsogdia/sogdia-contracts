@@ -1,0 +1,24 @@
+{
+  "name": "Character Skin Change Scroll",
+  "description": "Change the skin of your character.\n\n**How To Use**\nWhen you use this item, the skin change window will open. Select the skin you want and click the confirm button.\n\n**Restriction**\nPlease unequip your defences and extention slots if you want to change the skin.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25194.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_CHAR_SKIN_CHANGE_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Special"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

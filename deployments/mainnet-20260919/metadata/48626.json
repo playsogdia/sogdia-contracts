@@ -1,0 +1,25 @@
+{
+  "name": "Fox Summon Scroll",
+  "description": "A three-tailed fox.  Its resemblance to the legendary nine-tailed fox brings the misunderstanding that it is an uncanny beast.  To the contrary, however, three-tailed foxes are docile and friendly.  Despite what the sensuous looks may suggest, their attack is powerful and quick, hence being trained for hunting.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable; this pet has no rental expiry. Recall and resummon do not consume it.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/48626.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/48626",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_FOX_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Growth Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · no rental expiry"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

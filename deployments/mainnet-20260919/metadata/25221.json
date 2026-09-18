@@ -1,0 +1,24 @@
+{
+  "name": "Reverse Return Scroll",
+  "description": "Can teleport to one of the following three places.\n1. The location where the return scroll was last used\n2. The location where you died last\n3.  Certain Locations which saved in the game system\n4. Teleport to party members\n5. Teleport to target area\n\n**How To Use**\nWhen you right click the scroll, you will return to the location selected.\n\n**Restriction**\nNone\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25221.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_REVERSE_RETURN_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Order"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

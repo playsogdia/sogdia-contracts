@@ -1,0 +1,24 @@
+{
+  "name": "HP Recovery Potion (large)",
+  "description": "A bag of 1,000 potions that can heal 570 HP pts. each.\n\n**How To Use**\nSimilar to the ordinary potion.\n\n**Restriction**\nNone\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25224.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_HP_SUPERSET_4_BAG",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Potion"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

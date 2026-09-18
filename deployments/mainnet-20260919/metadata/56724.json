@@ -1,0 +1,25 @@
+{
+  "name": "Cursed Soul Dress (F)",
+  "description": "Cursed Soul dress for pirate. Person who wears this dress will be cursed and becomes a skeleton during moonlight.\n\nKept in your wallet. Wear on a compatible character while you own it. Selling or transferring your last copy removes the appearance.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/56724.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/56724",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_AVATAR_W_PIRATECREW",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Avatar"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Dress"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Wear while owned"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Limited to 50"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Tiger Tablet of the Sales King (Premium)",
+  "description": "A tablet made of tiger skin.\nUsing this item grants benefits for 4 weeks such as increased sales space, increased sales expiry date, and discounted processing fees.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/80568.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_OPEN_MARKET_TICKET",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Expendables"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Special"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

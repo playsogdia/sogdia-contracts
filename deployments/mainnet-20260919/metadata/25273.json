@@ -1,0 +1,25 @@
+{
+  "name": "Penguin Summon Scroll",
+  "description": "An animal that did not exist on the continent, it is assumed that Penguins came from the cold area in the south. Unlike their cute and small appearance, they are very aggressive. Rumors say that they suppressed the surrounding areas with brute force.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable; this pet has no rental expiry. Recall and resummon do not consume it.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25273.png",
+  "animation_url": "https://marketplace.sogdia.gg/nft/25273",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_PENGUIN_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Growth Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · no rental expiry"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

@@ -19,9 +19,10 @@ were read back and matched. See `broadcast.json` and `simulation.json`.
 
 Parameters:604800-second periods,200bps maximum reward budget,7776000-second claims,
 250bps resale fee and500bps external royalty to `0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0`.
-Total receipt gas fees:0.00059168606614ETH. No token funds were transferred.
+Deployment receipt gas fees:0.00059168606614ETH. Subsequent funding is recorded below.
 
-The marketplace is paused. Products/offers and collection metadata are not configured.
+The marketplace is paused. Offers are not configured. Collection publication and
+product registration are recorded in the metadata evidence files.
 No reward period was opened. Game, collectors and frontend have not been switched to
 these addresses. Mainnet prices must be reviewed before creating offers.
 
@@ -32,7 +33,8 @@ activating signed delivery. No private key is included in this evidence.
 ## Explorer verification
 
 The official Blockscout API returned HTTP403 Cloudflare challenges for verification
-and read requests. Source verification is therefore pending, not successful. Four
+and read requests. Automated source verification remains blocked; the owner-reported result is recorded
+below. Four
 `*-standard-input.json` files and `constructor-args.json` are ready for submission.
 Compiler0.8.30, optimizer200; Rewards uses Paris and the other contracts use Cancun.
 
@@ -56,3 +58,29 @@ player claims.
 The owner reported successfully verifying SogdiaRewards through the Blockscout UI.
 This report is distinct from our blocked automated verification requests; the other
 three contracts are not recorded as verified.
+
+## Collection metadata and product registration
+
+The collection name is **Sogdia**, both on chain and in collection metadata.
+`contractURI()` points to:
+`https://assets.sogdia.gg/assets/v8/nft-20260919-mainnet/collection.json`.
+
+All 208 product IDs were registered with their existing reviewed supply caps and
+individual metadata URLs. The 209 published JSON files matched their local SHA-256
+hashes, and all 210 referenced images responded successfully. Existing R2 artwork
+was reused; testnet fixture wording was removed from the new metadata documents.
+
+The operation passed a mainnet-fork simulation before broadcast. All 209 mainnet
+transactions succeeded (one collection URI plus 208 products). Final on-chain
+readback verified every product URI and cap, the collection name and contract URI,
+zero minted items, and the marketplace's paused state. A transient RPC failure was
+resumed from the saved transaction journal without duplicate registration.
+
+Receipt gas fees: 0.002238413369914 ETH.
+See `metadata-plan.json`, `metadata-publication.json`, `metadata-simulation.json`
+and `metadata-registration.json` for inputs, publication checks and receipts.
+
+This registers the collection catalogue; offers/prices and runtime activation are
+still pending. No NFT was minted and OpenSea indexing was not independently
+verified by this operation. Hidden storefront products retain their separate
+visibility policy.

@@ -1,0 +1,24 @@
+{
+  "name": "Destruction Rondo",
+  "description": "An additive needed to remove sockets on the item or readied skills of Fellows.\n\n\nPlace an equipment item and \" Destruction Rondo\" in the Socket Alchemy window and combine them.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/79954.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_ETC_ARCHEMY_RONDO_03",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Alchemy"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Others"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

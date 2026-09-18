@@ -1,0 +1,24 @@
+{
+  "name": "Potion of Growth",
+  "description": "Item that increases the experience points gained by the growth pets.\n100% additional experience points are gained.\n\n**How To Use**\nCan only be used on growth pets.\nApplied the instant it is used. Can only be used when level 5 or above.\nCan be used simultaneously with Gold/Silver Time items.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/38547.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_MALL_PET_GROWTH_POTION",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Pet Items"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Inventory package"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}

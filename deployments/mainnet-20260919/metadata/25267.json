@@ -1,0 +1,24 @@
+{
+  "name": "Spotted Rabbit Summon Scroll",
+  "description": "A scroll that summons the holy animal, Spotted Toto, for 4 weeks. Spotted Toto is a holy animal that only lives in the area where gods live, Yeomju. They look like rabbits but have intelligence higher than that of humans, and are very obedient.\nThey are also very emotional, and give help to intimate humans with mysterious power.\n\n**How To Use**\nThe time is applied when the scroll is used, and player must be level 5 or higher to be able to use.\n\n**Restriction**\nCannot be summoned simultaneously with other store pets.\n\nRedeem one package to a character. Its NFT is permanently locked and cannot be resold or withdrawn. The delivered items follow their native game rules. The summon item is reusable. Rental lasts 40320 minutes (28 days) from first pet creation; recall, relog and resummon do not reset the clock.",
+  "image": "https://assets.sogdia.gg/assets/v8/nft-20260918-integration/25267.png",
+  "external_url": "https://marketplace.sogdia.gg/item/PACKAGE_ITEM_COS_P_SPOT_RABBIT_SCROLL",
+  "attributes": [
+    {
+      "trait_type": "Category",
+      "value": "Pet"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Ability Pet"
+    },
+    {
+      "trait_type": "Use",
+      "value": "Reusable pet · 40320 minutes"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "Unlimited"
+    }
+  ]
+}
