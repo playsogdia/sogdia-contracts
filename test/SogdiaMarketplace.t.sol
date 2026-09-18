@@ -116,6 +116,15 @@ contract SogdiaMarketplaceTest {
         vm.expectRevert();m.pause();
         vm.prank(safe);m.pause();require(m.paused());
     }
+    function testCollectionTitleAndExternalTransfer() public {
+        require(keccak256(bytes(c.name())) == keccak256("Sogdia"));
+        require(keccak256(bytes(c.symbol())) == keccak256("SOGDIA"));
+        vm.prank(A); t.approve(address(m), 100);
+        vm.prank(A); m.buyPrimary(60000, 1, 100);
+        vm.prank(A); c.safeTransferFrom(A, B, 60000, 1, "");
+        require(c.balanceOf(A, 60000) == 0 && c.balanceOf(B, 60000) == 1);
+    }
+
     // External marketplaces: ERC-2981 royalty is owner-set, capped, and independent of the marketplace fee.
     function testRoyaltyIsOwnerSetCappedAndSeparateFromMarketFee() public {
         (address none,uint256 zero)=c.royaltyInfo(60000,10000);
