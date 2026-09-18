@@ -6,8 +6,6 @@ Smart contracts for [Sogdia](https://sogdia.gg), a browser MMORPG: the item stor
 marketplace and the player reward pool. They are written for Robinhood Chain (testnet chain id
 46630, mainnet 4663) and paid in the SOG token.
 
-**Status:** not deployed to mainnet and not audited.
-
 ## Contracts
 
 | Contract | Purpose |
@@ -53,7 +51,9 @@ ownership transfer; the planned production owner is a Safe multisig.
 - In the reward pool: change the period length, the per-period budget cap or the claim window;
   run two periods at once; replace a finalized root; redirect a claim to another address.
 
-`SogdiaMallDelivery` has no owner at all. Its accepted product ids are fixed at deployment.
+`SogdiaMallDelivery` has no owner at all. Its accepted product ids and separate delivery authorization signer are fixed at deployment.
+Both delivery entry points require a short-lived, single-use [EIP-712 authorization](DELIVERY_AUTHORIZATION.md)
+issued after the game server verifies character ownership.
 
 ### What you still have to trust
 
@@ -62,7 +62,9 @@ ownership transfer; the planned production owner is a Safe multisig.
   owner could leave players out or pay its own addresses. The contract bounds the damage: one period
   at a time, a budget of at most `maxBudgetBps` of the uncommitted pool, and unclaimed rewards returning to the pool after `claimSeconds`.
 - **In-game delivery.** `SogdiaMallDelivery` only records the request; the game server delivers the
-  item. A redeemed item stays locked in the contract.
+  item. The dedicated authorization signer attests that the buyer owns the target character;
+  the contract cannot query the game database. A redeemed item stays locked in the contract.
+  Losing the immutable signing key requires a new bridge deployment for future redemptions.
 - **Royalties elsewhere.** Royalties from external marketplaces such as OpenSea go to the owner's
   royalty wallet [`0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0`](https://robinhoodchain.blockscout.com/address/0xA9080bF47e6Bf20aA263A00258601Dae33AD01E0), not to a contract. Half of what accumulates is planned to be converted to SOG and
   deposited into the reward pool with `fund`, which emits a public `Funded` event; this is a manual
