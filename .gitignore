@@ -6,6 +6,9 @@ broadcast/
 # Dependencies (installed with npm ci)
 node_modules/
 
+# Price lists handed to script/CreateProducts.s.sol: the operator's own file, never this repo's
+products/
+
 # Local secrets and environment
 .env
 .env.*

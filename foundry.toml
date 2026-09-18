@@ -12,6 +12,9 @@ compilation_restrictions = [{ paths = "src/SogdiaRewards.sol", evm_version = "pa
 optimizer = true
 optimizer_runs = 200
 remappings = ["@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/"]
+# script/CreateProducts.s.sol reads the price list it is given. The list is the operator's own file and
+# is never committed, so the one directory it may be read from is the only filesystem access granted.
+fs_permissions = [{ access = "read", path = "./products" }]
 
 [profile.default.fuzz]
 runs = 256
