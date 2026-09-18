@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "complete": true,
+  "broadcast": true,
+  "chainId": 4663,
+  "token": "0x2513aa8c23426968402b57ab76ed61fc4aF9d8F6",
+  "owner": "0x97906F9CF391a9506A141cF8C0c6AA7A4c965BE4",
+  "addresses": {
+    "SogdiaRewards": "0x26C2E78D3b78A3207f940E6bf3E84026926cc87C",
+    "SogdiaCosmetics": "0x9927d68d0EfaEA91011Aa321C799786d91Cc518D",
+    "SogdiaMarketplace": "0x9883aA58e9fc669c0039bf7E54babe72fC0C62DF",
+    "SogdiaMallDelivery": "0xe1457BfbB3B7c7d1B01c4c7D5529A7A095a04Ced"
+  },
+  "authorizationSigner": "0xCb38506Da4335299cD0f85752CCB0e4eDDB91c13",
+  "catalogHash": "0x83c944f5bb40516214219608631194277fb6f238d084ba120b5741dc38060453",
+  "deliveryProducts": 97,
+  "paused": true,
+  "gasUsed": "9022924",
+  "runtimeHashes": {
+    "SogdiaRewards": "0x9d4bd2ba856fefc602898f1aba08e2a31586e90ebe9fe5615dc5997ec285b574",
+    "SogdiaCosmetics": "0xaa770b953bec1380385df47c96486fb3962cfc0a12f788fdb8c9bc32bbbcc949",
+    "SogdiaMarketplace": "0xbb1e4519f4e3d6286ff0c5cd0264c39833ce31e1949d3bf6117a3d7e9f0d4f07",
+    "SogdiaMallDelivery": "0x2e45fbc81b11847cd63050ee92263da6ee58aa41b371a977eb0860747590c512"
+  },
+  "receipts": [
+    {
+      "name": "SogdiaRewards",
+      "hash": "0x446427ee3cf283480326cdfe278f6eee4f6a11dc1ca4047b6d15f8245106d299",
+      "nonce": 1,
+      "blockNumber": 66554284,
+      "contractAddress": "0x26C2E78D3b78A3207f940E6bf3E84026926cc87C",
+      "gasUsed": "1633387",
+      "gasPrice": "66952000",
+      "status": 1
+    },
+    {
+      "name": "SogdiaCosmetics",
+      "hash": "0x08fda5269e390454edbaa9fe652cee7db30e5319d01495355bedc227e3637d81",
+      "nonce": 2,
+      "blockNumber": 66554436,
+      "contractAddress": "0x9927d68d0EfaEA91011Aa321C799786d91Cc518D",
+      "gasUsed": "1891808",
+      "gasPrice": "65150000",
+      "status": 1
+    },
+    {
+      "name": "SogdiaMarketplace",
+      "hash": "0x1379f81ef68689ecce0fbf5b5b8cbf5836baaf4c910089d376fbd270f87f2a04",
+      "nonce": 3,
+      "blockNumber": 66554526,
+      "contractAddress": "0x9883aA58e9fc669c0039bf7E54babe72fC0C62DF",
+      "gasUsed": "1684888",
+      "gasPrice": "65232000",
+      "status": 1
+    },
+    {
+      "name": "SogdiaMallDelivery",
+      "hash": "0x23dd75030c2b9e1a28745e28a4fa43380e45ffae75df2008b50124cc16face5e",
+      "nonce": 4,
+      "blockNumber": 66554566,
+      "contractAddress": "0xe1457BfbB3B7c7d1B01c4c7D5529A7A095a04Ced",
+      "gasUsed": "3667748",
+      "gasPrice": "65316000",
+      "status": 1
+    },
+    {
+      "name": "pause",
+      "hash": "0x111207c64bf78d0ff50dd384a3724363368d801a8005b591ed975909679cc5b5",
+      "nonce": 5,
+      "blockNumber": 66554617,
+      "contractAddress": null,
+      "gasUsed": "46922",
+      "gasPrice": "65488000",
+      "status": 1
+    },
+    {
+      "name": "bindMarketplace",
+      "hash": "0x12d797901ff82313ed812e7e668614d2a9aa94349ddcf03f27f14aca605cb82d",
+      "nonce": 6,
+      "blockNumber": 66554649,
+      "contractAddress": null,
+      "gasUsed": "50046",
+      "gasPrice": "65776000",
+      "status": 1
+    },
+    {
+      "name": "setRoyalty",
+      "hash": "0xf38e1fa1425b84c0cc0b8e7396dd2bc4f728ec0667bfdca87a1c58a85bad7745",
+      "nonce": 7,
+      "blockNumber": 66554692,
+      "contractAddress": null,
+      "gasUsed": "48125",
+      "gasPrice": "67332000",
+      "status": 1
+    }
+  ]
+}

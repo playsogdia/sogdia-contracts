@@ -1,0 +1,22 @@
+{
+  "SogdiaRewards": {
+    "address": "0x26C2E78D3b78A3207f940E6bf3E84026926cc87C",
+    "status": "blocked",
+    "reason": "Explorer HTTP403 Cloudflare challenge; not source-verified"
+  },
+  "SogdiaCosmetics": {
+    "address": "0x9927d68d0EfaEA91011Aa321C799786d91Cc518D",
+    "status": "blocked",
+    "reason": "Explorer HTTP403 Cloudflare challenge; not source-verified"
+  },
+  "SogdiaMarketplace": {
+    "address": "0x9883aA58e9fc669c0039bf7E54babe72fC0C62DF",
+    "status": "blocked",
+    "reason": "Explorer HTTP403 Cloudflare challenge; not source-verified"
+  },
+  "SogdiaMallDelivery": {
+    "address": "0xe1457BfbB3B7c7d1B01c4c7D5529A7A095a04Ced",
+    "status": "blocked",
+    "reason": "Explorer HTTP403 Cloudflare challenge; not source-verified"
+  }
+}
